@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <title>Event Booking</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(120deg, #f8fafc 0%, #e0e7ff 100%);
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 400px;
+            margin: 40px auto;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+            padding: 32px 24px 24px 24px;
+        }
+        h2 {
+            text-align: center;
+            color: #3b82f6;
+            margin-bottom: 24px;
+        }
+        label {
+            display: block;
+            margin-bottom: 12px;
+            color: #374151;
+            font-weight: 500;
+        }
+        input[type="text"], input[type="number"], select {
+            width: 100%;
+            padding: 8px 10px;
+            margin-top: 6px;
+            margin-bottom: 16px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 1em;
+            box-sizing: border-box;
+            transition: border-color 0.2s;
+        }
+        input:focus, select:focus {
+            border-color: #3b82f6;
+            outline: none;
+        }
+        button[type="submit"] {
+            width: 100%;
+            background: #3b82f6;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 10px 0;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-top: 8px;
+        }
+        button[type="submit"]:hover {
+            background: #2563eb;
+        }
+        #modal {
+            display: none;
+            margin-top: 18px;
+            color: #16a34a;
+            background: #dcfce7;
+            border-radius: 6px;
+            padding: 12px;
+            text-align: center;
+            font-weight: 500;
+            box-shadow: 0 2px 8px rgba(22,163,74,0.08);
+        }
+        #error {
+            color: #ef4444;
+            background: #fee2e2;
+            border-radius: 6px;
+            padding: 10px;
+            margin-top: 10px;
+            text-align: center;
+            font-weight: 500;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>ฟอร์มจองตั๋วกิจกรรม</h2>
+        <form id="bookingForm">
+            <label>ชื่อ-นามสกุล:
+                <input type="text" id="fullname" required placeholder="กรอกชื่อ-นามสกุล">
+            </label>
+            <label>เบอร์โทรศัพท์:
+                <input type="text" id="phone" required placeholder="กรอกเบอร์โทรศัพท์">
+            </label>
+            <label>ประเภทบัตร:
+                <select id="ticketType">
+                    <option value="ปกติ">ปกติ</option>
+                    <option value="VIP">VIP</option>
+                    <option value="Premium">Premium</option>
+                </select>
+            </label>
+            <label>จำนวนบัตร:
+                <input type="number" id="ticketCount" min="1" max="5" required placeholder="1-5">
+            </label>
+            <button type="submit">จองกิจกรรม</button>
+        </form>
+        <div id="modal"></div>
+        <div id="error"></div>
+    </div>
+    <script>
+        document.getElementById("bookingForm").addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const fullname = document.getElementById("fullname").value.trim();
+            const phone = document.getElementById("phone").value.trim();
+            const type = document.getElementById("ticketType").value;
+            const count = parseInt(document.getElementById("ticketCount").value);
+            const errorDiv = document.getElementById("error");
+            const modal = document.getElementById("modal");
+
+            errorDiv.innerText = "";
+            errorDiv.style.display = "none";
+            modal.style.display = "none";
+
+            const nameParts = fullname.split(" ");
+            if (nameParts.length < 2) {
+                errorDiv.innerText = "กรุณากรอกชื่อ-นามสกุล อย่างน้อย 2 คำ";
+                errorDiv.style.display = "block";
+                return;
+            }
+
+            if (!/^[0]{1}[0-9]{9}$/.test(phone)) {
+                errorDiv.innerText = "เบอร์โทรศัพท์ต้องมี 10 หลักและขึ้นต้นด้วย 0";
+                errorDiv.style.display = "block";
+                return;
+            }
+
+            if (count < 1 || count > 5) {
+                errorDiv.innerText = "จำนวนบัตรต้องอยู่ระหว่าง 1 ถึง 5";
+                errorDiv.style.display = "block";
+                return;
+            }
+
+            if ((type === "VIP" || type === "Premium") && count > 2) {
+                errorDiv.innerText = "VIP หรือ Premium จองได้ไม่เกิน 2 ใบ";
+                errorDiv.style.display = "block";
+                return;
+            }
+
+            modal.innerText = `จองตัวสำเร็จ จำนวน: ${count} ประเภท: ${type}`;
+            modal.style.display = "block";
+        });
+    </script>
+</body>
+</html>

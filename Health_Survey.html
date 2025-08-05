@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <title>Health Survey</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f8fa;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            background: #fff;
+            max-width: 400px;
+            margin: 40px auto;
+            padding: 32px 24px 24px 24px;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+        }
+        h2 {
+            text-align: center;
+            color: #2d7a2d;
+            margin-bottom: 24px;
+        }
+        label {
+            display: block;
+            margin-bottom: 14px;
+            color: #333;
+        }
+        input[type="number"], textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 4px;
+            border: 1px solid #cfd8dc;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 1em;
+            background: #f9fafb;
+        }
+        input[type="radio"], input[type="checkbox"] {
+            margin-right: 6px;
+            accent-color: #2d7a2d;
+        }
+        textarea {
+            resize: vertical;
+            min-height: 60px;
+            margin-top: 8px;
+        }
+        button[type="submit"] {
+            background: #2d7a2d;
+            color: #fff;
+            border: none;
+            padding: 10px 0;
+            width: 100%;
+            border-radius: 6px;
+            font-size: 1.1em;
+            cursor: pointer;
+            margin-top: 12px;
+            transition: background 0.2s;
+        }
+        button[type="submit"]:hover {
+            background: #256325;
+        }
+        #healthResult, #healthError {
+            margin-top: 18px;
+            font-size: 1.05em;
+            text-align: center;
+        }
+        #healthError {
+            color: #d32f2f;
+        }
+        #healthResult {
+            color: #388e3c;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>แบบสอบถามสุขภาพ</h2>
+        <form id="healthForm">
+            <label>อายุ:
+                <input type="number" id="age" required min="15" max="60" placeholder="กรอกอายุ">
+            </label>
+            <label>เพศ:
+                <input type="radio" name="gender" value="ชาย" required> ชาย
+                <input type="radio" name="gender" value="หญิง" required> หญิง
+            </label>
+            <label>น้ำหนัก (kg):
+                <input type="number" id="weight" required min="1" placeholder="กรอกน้ำหนัก">
+            </label>
+            <label>ส่วนสูง (cm):
+                <input type="number" id="height" required min="1" placeholder="กรอกส่วนสูง">
+            </label>
+            <label>
+                <input type="checkbox" id="hasDisease"> มีโรคประจำตัว
+            </label>
+            <textarea id="diseaseInfo" placeholder="กรอกรายละเอียดโรค" style="display:none;"></textarea>
+            <button type="submit">ส่งข้อมูล</button>
+        </form>
+        <div id="healthResult"></div>
+        <div id="healthError"></div>
+    </div>
+    <script>
+        const checkbox = document.getElementById("hasDisease");
+        const textarea = document.getElementById("diseaseInfo");
+
+        checkbox.addEventListener("change", function () {
+            textarea.style.display = checkbox.checked ? "block" : "none";
+        });
+
+        document.getElementById("healthForm").addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const age = parseInt(document.getElementById("age").value);
+            const weight = parseFloat(document.getElementById("weight").value);
+            const height = parseFloat(document.getElementById("height").value);
+            const diseaseChecked = checkbox.checked;
+            const diseaseText = textarea.value.trim();
+            const error = document.getElementById("healthError");
+            const result = document.getElementById("healthResult");
+
+            error.innerText = "";
+            result.innerText = "";
+
+            if (age < 15 || age > 60) {
+                error.innerText = "อายุต้องอยู่ระหว่าง 15-60 ปี";
+                return;
+            }
+
+            if (weight <= 0 || height <= 0) {
+                error.innerText = "น้ำหนักและส่วนสูงต้องเป็นค่าบวก";
+                return;
+            }
+
+            if (diseaseChecked && diseaseText === "") {
+                error.innerText = "กรุณาระบุโรคประจำตัวเพิ่มเติม";
+                return;
+            }
+
+            const bmi = weight / ((height / 100) ** 2);
+            let category = "";
+
+            if (bmi < 18.5) category = "น้ำหนักน้อย";
+            else if (bmi < 23) category = "ปกติ";
+            else if (bmi < 25) category = "น้ำหนักเกิน";
+            else category = "อ้วน";
+
+            result.innerText = `ค่าดัชนีมวลกาย (BMI) = ${bmi.toFixed(2)} → ${category}`;
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8" />
+    <title>คำร้องขอโอนย้ายสาขาวิชาต่างคณะ</title>
+    <style>
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 500px;
+            background: #fff;
+            margin: 40px auto;
+            border-radius: 16px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+            padding: 32px 24px 24px 24px;
+        }
+        h2 {
+            text-align: center;
+            color: #2d5c8a;
+            margin-bottom: 24px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        label {
+            display: block;
+            margin-top: 16px;
+            color: #2d5c8a;
+            font-weight: 500;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px 12px;
+            margin-top: 6px;
+            border: 1px solid #bcd0ee;
+            border-radius: 8px;
+            font-size: 1em;
+            background: #f7fbff;
+            transition: border 0.2s;
+        }
+        input:focus, select:focus, textarea:focus {
+            border-color: #2d5c8a;
+            outline: none;
+            background: #eaf4ff;
+        }
+        .error {
+            color: #e74c3c;
+            font-size: 0.92em;
+            margin-top: 2px;
+            margin-bottom: 2px;
+            min-height: 18px;
+        }
+        button {
+            margin-top: 28px;
+            padding: 12px 0;
+            width: 100%;
+            background: linear-gradient(90deg, #2d5c8a 0%, #4ca1af 100%);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(44, 161, 175, 0.08);
+            transition: background 0.2s;
+        }
+        button:hover {
+            background: linear-gradient(90deg, #4ca1af 0%, #2d5c8a 100%);
+        }
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            margin-top: 18px;
+            font-size: 1em;
+            color: #2d5c8a;
+        }
+        .checkbox-label input[type="checkbox"] {
+            width: auto;
+            margin-right: 8px;
+            accent-color: #2d5c8a;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 16px 8px;
+            }
+            h2 {
+                font-size: 1.1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>คำร้องขอโอนย้ายสาขาวิชาต่างคณะ</h2>
+        <form id="transferForm">
+            <label for="fullname">ชื่อ-นามสกุล:</label>
+            <input type="text" id="fullname" name="fullname" required />
+            <div class="error" id="fullnameError"></div>
+
+            <label for="studentId">รหัสนักศึกษา:</label>
+            <input type="text" id="studentId" name="studentId" maxlength="10" required />
+            <div class="error" id="studentIdError"></div>
+
+            <label for="currentFaculty">คณะเดิม:</label>
+            <select id="currentFaculty" name="currentFaculty" required>
+                <option value="">-- เลือกคณะเดิม --</option>
+                <option value="วิทยาศาสตร์">วิทยาศาสตร์</option>
+                <option value="วิศวกรรมศาสตร์">บริหารธุรกิจ</option>
+                <option value="เกษตรศาสตร์">ผลิตกรรมการเกษตร</option>
+                <option value="ศิลปศาสตร์">คณะศิลปศาสตร์</option>
+                <option value="วิศวกรรม">คณะวิศวกรรมและอุตสาหกรรมเกษตร </option>
+                <option value="พัฒนาการท่องเที่ยว ">คณะพัฒนาการท่องเที่ยว </option>
+                <option value="เศรษฐศาสตร์">คณะเศรษฐศาสตร์</option>
+                <option value="นิติศาสตร์">คณะสัตวแพทย์ศาสตร์</option>
+                <option value="คณะพยาบาลศาสตร์">คณะพยาบาลศาสตร์</option>
+                <option value="วิทยาลัยพลังงานทดแทน ">วิทยาลัยพลังงานทดแทน </option>
+                <option value="วิทยาลัยบริหารศาสตร์ ">วิทยาลัยบริหารศาสตร์ </option>
+                <option value="สัตวศาสตร์และเทคโนโลยี">คณะสัตวศาสตร์และเทคโนโลยี</option>
+                <option value="เทคโนโลยีการประมง">คณะเทคโนโลยีการประมง และทรัพยากรทางน้ำ</option>
+                <option value="สารสนเทศและการสื่อสาร ">คณะสารสนเทศและการสื่อสาร </option>
+                <option value="สถาปัตยกรรมศาสตร์ ">คณะสถาปัตยกรรมศาสตร์ และการออกแบบสิ่งแวดล้อม </option>
+            </select>
+            <div class="error" id="currentFacultyError"></div>
+
+            <label for="currentProgram">สาขาวิชาเดิม:</label>
+            <input type="text" id="currentProgram" name="currentProgram" required />
+            <div class="error" id="currentProgramError"></div>
+
+            <label for="newFaculty">คณะใหม่:</label>
+            <select id="newFaculty" name="newFaculty" required>
+                <option value="">-- เลือกคณะใหม่ --</option>
+                <option value="วิทยาศาสตร์">วิทยาศาสตร์</option>
+                <option value="วิศวกรรมศาสตร์">บริหารธุรกิจ</option>
+                <option value="เกษตรศาสตร์">ผลิตกรรมการเกษตร</option>
+                <option value="ศิลปศาสตร์">คณะศิลปศาสตร์</option>
+                <option value="วิศวกรรม">คณะวิศวกรรมและอุตสาหกรรมเกษตร </option>
+                <option value="พัฒนาการท่องเที่ยว ">คณะพัฒนาการท่องเที่ยว </option>
+                <option value="เศรษฐศาสตร์">คณะเศรษฐศาสตร์</option>
+                <option value="นิติศาสตร์">คณะสัตวแพทย์ศาสตร์</option>
+                <option value="คณะพยาบาลศาสตร์">คณะพยาบาลศาสตร์</option>
+                <option value="วิทยาลัยพลังงานทดแทน ">วิทยาลัยพลังงานทดแทน </option>
+                <option value="วิทยาลัยบริหารศาสตร์ ">วิทยาลัยบริหารศาสตร์ </option>
+                <option value="สัตวศาสตร์และเทคโนโลยี">คณะสัตวศาสตร์และเทคโนโลยี</option>
+                <option value="เทคโนโลยีการประมง">คณะเทคโนโลยีการประมง และทรัพยากรทางน้ำ</option>
+                <option value="สารสนเทศและการสื่อสาร ">คณะสารสนเทศและการสื่อสาร </option>
+                <option value="สถาปัตยกรรมศาสตร์ ">คณะสถาปัตยกรรมศาสตร์ และการออกแบบสิ่งแวดล้อม </option>
+            </select>
+            <div class="error" id="newFacultyError"></div>
+
+            <label for="newProgram">สาขาวิชาใหม่:</label>
+            <input type="text" id="newProgram" name="newProgram" required />
+            <div class="error" id="newProgramError"></div>
+
+            <label for="reason">เหตุผลที่ขอโอนย้าย:</label>
+            <textarea id="reason" name="reason" rows="4" required></textarea>
+            <div class="error" id="reasonError"></div>
+
+            <label for="date">วันที่เขียนคำร้อง:</label>
+            <input type="date" id="date" name="date" required />
+            <div class="error" id="dateError"></div>
+
+            <label class="checkbox-label">
+                <input type="checkbox" id="confirm" required />
+                ข้าพเจ้ายืนยันว่าข้อมูลถูกต้องและครบถ้วน
+            </label>
+            <div class="error" id="confirmError"></div>
+
+            <button type="submit">ส่งคำร้อง</button>
+        </form>
+    </div>
+    <script>
+        const form = document.getElementById("transferForm");
+
+        form.addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            document.querySelectorAll(".error").forEach(el => el.textContent = "");
+
+            let isValid = true;
+
+            const fullname = document.getElementById("fullname").value.trim();
+            const studentId = document.getElementById("studentId").value.trim();
+            const currentFaculty = document.getElementById("currentFaculty").value;
+            const currentProgram = document.getElementById("currentProgram").value.trim();
+            const newFaculty = document.getElementById("newFaculty").value;
+            const newProgram = document.getElementById("newProgram").value.trim();
+            const reason = document.getElementById("reason").value.trim();
+            const date = document.getElementById("date").value;
+            const confirm = document.getElementById("confirm").checked;
+
+            if (fullname === "") {
+                document.getElementById("fullnameError").textContent = "กรุณากรอกชื่อ-นามสกุล";
+                isValid = false;
+            }
+
+            if (!/^\d{10}$/.test(studentId)) {
+                document.getElementById("studentIdError").textContent = "รหัสนักศึกษาต้องเป็นตัวเลข 10 หลัก";
+                isValid = false;
+            }
+
+            if (currentFaculty === "") {
+                document.getElementById("currentFacultyError").textContent = "กรุณาเลือกคณะเดิม";
+                isValid = false;
+            }
+
+            if (currentProgram === "") {
+                document.getElementById("currentProgramError").textContent = "กรุณากรอกสาขาวิชาเดิม";
+                isValid = false;
+            }
+
+            if (newFaculty === "") {
+                document.getElementById("newFacultyError").textContent = "กรุณาเลือกคณะใหม่";
+                isValid = false;
+            }
+
+            if (newProgram === "") {
+                document.getElementById("newProgramError").textContent = "กรุณากรอกสาขาวิชาใหม่";
+                isValid = false;
+            }
+
+            if (reason === "") {
+                document.getElementById("reasonError").textContent = "กรุณาระบุเหตุผล";
+                isValid = false;
+            }
+
+            if (date === "") {
+                document.getElementById("dateError").textContent = "กรุณาเลือกวันที่";
+                isValid = false;
+            }
+
+            if (!confirm) {
+                document.getElementById("confirmError").textContent = "กรุณายืนยันข้อมูล";
+                isValid = false;
+            }
+
+            if (isValid) {
+                alert("✅ ส่งคำร้องโอนย้ายเรียบร้อยแล้ว!");
+                form.reset();
+            }
+        });
+    </script>
+</body>
+</html>
